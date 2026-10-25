@@ -1,0 +1,18 @@
+{
+  "name": "enterprise-paas-microservice",
+  "version": "1.0.0",
+  "description": "Enterprise Cloud-Native Microservice with Passwordless Azure Identity",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "@azure/identity": "^4.0.1",
+    "@azure/keyvault-secrets": "^4.8.0",
+    "helmet": "^7.1.0",
+    "cors": "^2.8.5",
+    "pino": "^9.0.0"
+  }
+}

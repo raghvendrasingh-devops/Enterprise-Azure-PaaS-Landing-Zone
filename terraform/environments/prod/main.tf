@@ -23,6 +23,7 @@ resource "azurerm_resource_group" "rg_paas" {
   tags     = var.tags
 }
 
+# 1. Zero-Trust PaaS Network Fabric
 module "network" {
   source              = "../../modules/paas_network"
   resource_group_name = azurerm_resource_group.rg_paas.name
@@ -31,6 +32,7 @@ module "network" {
   tags                = var.tags
 }
 
+# 2. Compute: Linux App Service & Serverless Function
 module "compute" {
   source                = "../../modules/paas_compute"
   resource_group_name   = azurerm_resource_group.rg_paas.name
@@ -39,6 +41,7 @@ module "compute" {
   tags                  = var.tags
 }
 
+# 3. Data Tier: Azure SQL & Key Vault with Private Endpoints
 module "data" {
   source                     = "../../modules/paas_data"
   resource_group_name        = azurerm_resource_group.rg_paas.name
@@ -47,4 +50,13 @@ module "data" {
   tenant_id                  = var.tenant_id
   sql_admin_password         = var.sql_admin_password
   tags                       = var.tags
+}
+
+# 4. Enterprise API Management (APIM) Internal Mode
+module "apim" {
+  source              = "../../modules/paas_apim"
+  resource_group_name = azurerm_resource_group.rg_paas.name
+  location            = var.location
+  apim_subnet_id      = module.network.private_endpoint_subnet_id
+  tags                = var.tags
 }
